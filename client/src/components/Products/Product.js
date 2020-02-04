@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { addToCart } from '../../actions/Cart'
 
 
 
-const Product = ({data}) => {
+const Product = ({data, addToCart}) => {
     return(
         <div className="col-md-3">
-            <Link to={`/product/${data._id}`} className="product" onClick={() => console.log(data._id)}>
+            <Link to={`/product/${data._id}`} className="product" onClick={() => addToCart(data)}>
                 <p>{data.name}</p>
             </Link>
         </div>
@@ -16,9 +18,10 @@ const Product = ({data}) => {
 
 
 Product.propTypes = {
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    addToCart: PropTypes.func.isRequired
 }
 
 
 
-export default Product
+export default connect(null, {addToCart})(Product)

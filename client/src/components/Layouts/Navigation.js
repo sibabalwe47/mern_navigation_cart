@@ -1,8 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 
-const Navigation = () => {
+
+const Navigation = ({ cart }) => {
     return (
         <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
@@ -28,7 +31,7 @@ const Navigation = () => {
                     <li class="nav-item"><Link to="/about" class="nav-link">About</Link></li>
                     <li class="nav-item"><Link to="/blog" class="nav-link">Blog</Link></li>
                     <li class="nav-item"><Link to="/contact" class="nav-link">Contact</Link></li>
-                    <li class="nav-item cta cta-colored"><Link to="/cart" class="nav-link cart-link"><span class="icon-shopping_cart"></span>[2]</Link></li>
+                    <li class="nav-item cta cta-colored"><Link to="/cart" class="nav-link cart-link"><span class="icon-shopping_cart"></span>[{cart ? cart.length : '0'}]</Link></li>
 
                 </ul>
             </div>
@@ -38,4 +41,14 @@ const Navigation = () => {
 }
 
 
-export default Navigation;
+Navigation.propTypes = {
+    cart: PropTypes.array.isRequired
+}
+
+
+const mapStateToProps = state => ({
+    cart: state.Cart.productsIds
+})
+
+
+export default connect(mapStateToProps, null)(Navigation);
